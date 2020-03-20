@@ -1,0 +1,64 @@
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 180000
+#logging:
+#    config: classpath:log/logback-spring.xml
+server:
+  port: 8888
+  maxHttpHeaderSize: 10000000
+spring:
+  profiles:
+    active: local
+  application:
+    name: gamemall-service
+  data:
+    rest:
+      base-path: /
+      default-page-size: 10
+      default-page-number: 0
+      page-param-name: number
+      sort-param-name: sort
+      limit-param-name: size
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        event:
+          merge:
+            entity_copy_observer: allow
+      org:
+        hibernate:
+          envers:
+            revision_on_collection_change: true
+            store_data_at_delete: true
+            do_not_audit_optimistic_locking_field: true
+#      ddl-auto: update
+    show-sql: true
+#  http:
+#    multipart:
+#      max-request-size: 20MB
+#      max-file-size: 10MB
+  cache:
+    type: redis
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+---
+spring:
+    profiles: local
+    storage:
+#      storageMode: alioss
+      storageMode: local
+      mediaFolder: media/
+    datasource:
+      url: jdbc:mysql://127.0.0.1:3306/gamemall?characterEncoding=utf-8&serverTimezone=GMT%2B8
+      username: root
+      password: 123456
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password:
