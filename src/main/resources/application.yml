@@ -8,7 +8,7 @@
 #logging:
 #    config: classpath:log/logback-spring.xml
 server:
-  port: 8888
+  port: 9000
   maxHttpHeaderSize: 10000000
 spring:
   profiles:
