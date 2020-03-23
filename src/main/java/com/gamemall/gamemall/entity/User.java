@@ -1,25 +1,47 @@
 package com.gamemall.gamemall.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Data
-@Table
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "user")
 public class User {
+
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
+    @Column(name = "id")
+    @JsonProperty("id")
     private Integer id;
 
+    @Size(max = 20, message = "昵称长度不能超过20")
+    @Column(name = "email", unique = true)
+    @JsonProperty("email")
     private String email;
 
+    @Column(name = "nickname", length = 50)
+    @Size(max = 20, message = "昵称长度不能超过20")
+    @JsonProperty("nickname")
     private String nickname;
 
+    @Column(name = "password", length = 200)
+    @Size(max = 200, message = "用户密码长度不能超过200")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @Column(name = "avatar", length = 2000)
+    @JsonProperty("avatar")
     private Long avatar;
+
+    @Column(name = "salt", length = 50)
+    @Size(max = 50, message = "加密盐长度不能超过50")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String salt;
 
     private String introduction;
 

@@ -1,7 +1,7 @@
 package com.gamemall.gamemall.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gamemall.gamemall.entity.AjaxResponse;
+import com.gamemall.gamemall.utils.AjaxResponse;
 import com.gamemall.gamemall.entity.User;
 import com.gamemall.gamemall.service.UserService;
 import io.swagger.annotations.ApiResponse;
@@ -39,15 +39,25 @@ public class UserController {
         log.info("user:"+userService.getAccount(email, password));
         User user = userService.getAccount(email, password);
         if(user!=null) {
-            return AjaxResponse.success(user);
+            return AjaxResponse.success();
         }else{
             return AjaxResponse.error();
         }
     }
 
-    @GetMapping("/hello")
-    ResponseEntity hello() {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body("Your age is ");
+    @RequestMapping(method = RequestMethod.POST, path = "/register")
+    public @ResponseBody
+    AjaxResponse register(@RequestBody JsonNode jsonNode) throws Exception {
+        //用户认证
+        String email = jsonNode.path("email").textValue();
+
+        boolean hasUser = userService.hasUser(email);
+        log.info("user:"+hasUser);
+        if(hasUser) {
+            return AjaxResponse.error();
+        }else{
+            userService.addUser(email);
+            return AjaxResponse.success();
+        }
     }
 }

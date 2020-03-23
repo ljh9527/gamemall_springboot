@@ -1,4 +1,4 @@
-package com.gamemall.gamemall.entity;
+package com.gamemall.gamemall.utils;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

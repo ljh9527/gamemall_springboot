@@ -16,7 +16,18 @@ public class UserService {
     }
 
     public User getAccount(String email, String password) {
-        User user= (User) UserRepository.findByEmailAndAndPassword(email,password);
+        User user = (User) UserRepository.findByEmailAndAndPassword(email, password);
         return user;
+    }
+
+    public User addUser(String email) {
+        User user = new User();
+        user.setEmail(email);
+        return UserRepository.saveAndFlush(user);
+    }
+
+    public boolean hasUser(String email) {
+        User userName = UserRepository.findByEmail(email);
+        return userName == null ? false:true;
     }
 }
