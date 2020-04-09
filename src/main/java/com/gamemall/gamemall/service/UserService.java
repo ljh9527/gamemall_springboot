@@ -2,9 +2,10 @@ package com.gamemall.gamemall.service;
 
 import com.gamemall.gamemall.entity.User;
 import com.gamemall.gamemall.repositoy.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+@Slf4j
 @Service
 public class UserService {
 
@@ -20,9 +21,11 @@ public class UserService {
         return user;
     }
 
-    public User addUser(String email) {
+    public User addUser(String email, String nickname, String password) {
         User user = new User();
         user.setEmail(email);
+        user.setNickname(nickname);
+        user.setPassword(password);
         return UserRepository.saveAndFlush(user);
     }
 

@@ -47,6 +47,16 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  mail:
+    host: smtp.qq.com
+    username: 670684985@qq.com  # 邮箱地址
+    password: dxiddjrwsovbbefc # 授权码
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+
 ---
 spring:
     profiles: local

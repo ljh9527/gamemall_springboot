@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.gamemall.gamemall.utils.AjaxResponse;
 import com.gamemall.gamemall.entity.User;
 import com.gamemall.gamemall.service.UserService;
+import com.gamemall.gamemall.utils.ResultMsg;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
@@ -50,13 +51,16 @@ public class UserController {
     AjaxResponse register(@RequestBody JsonNode jsonNode) throws Exception {
         //用户认证
         String email = jsonNode.path("email").textValue();
+        String nickname = jsonNode.path("nickname").textValue();
+        String password = jsonNode.path("password").textValue();
+        log.info("jsonNode:"+jsonNode);
 
         boolean hasUser = userService.hasUser(email);
         log.info("user:"+hasUser);
         if(hasUser) {
-            return AjaxResponse.error();
+            return AjaxResponse.error("用户已存在");
         }else{
-            userService.addUser(email);
+            userService.addUser(email,nickname,password);
             return AjaxResponse.success();
         }
     }
