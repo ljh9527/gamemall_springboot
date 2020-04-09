@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService userService;
+    @Autowired
     private ImageService imageService;
 
     @Autowired
