@@ -60,4 +60,20 @@ public class UserController {
             return AjaxResponse.success();
         }
     }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/resetPassword")
+    public @ResponseBody
+    AjaxResponse resetPassword(@RequestBody JsonNode jsonNode) throws Exception {
+        //用户认证
+        String email = jsonNode.path("email").textValue();
+        String password = jsonNode.path("password").textValue();
+        boolean hasUser = userService.hasUser(email);
+        log.info("user:"+hasUser);
+        if(hasUser) {
+            userService.resetUserPassword(email,password);
+            return AjaxResponse.success();
+        }else{
+            return AjaxResponse.error("用户不存在");
+        }
+    }
 }

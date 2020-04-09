@@ -2,9 +2,11 @@ package com.gamemall.gamemall.service;
 
 import com.gamemall.gamemall.entity.User;
 import com.gamemall.gamemall.repositoy.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -23,6 +25,13 @@ public class UserService {
     public User addUser(String email) {
         User user = new User();
         user.setEmail(email);
+        return UserRepository.saveAndFlush(user);
+    }
+
+    public User resetUserPassword(String email, String password) {
+        User user = UserRepository.findByEmail(email);
+        user.setPassword(password);
+        log.info("user:"+user);
         return UserRepository.saveAndFlush(user);
     }
 
