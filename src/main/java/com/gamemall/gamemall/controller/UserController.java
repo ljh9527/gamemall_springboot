@@ -1,6 +1,8 @@
 package com.gamemall.gamemall.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamemall.gamemall.entity.Image;
+import com.gamemall.gamemall.service.ImageService;
 import com.gamemall.gamemall.utils.AjaxResponse;
 import com.gamemall.gamemall.entity.User;
 import com.gamemall.gamemall.service.UserService;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService userService;
+    private ImageService imageService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -40,7 +43,9 @@ public class UserController {
         log.info("user:"+userService.getAccount(email, password));
         User user = userService.getAccount(email, password);
         if(user!=null) {
-            return AjaxResponse.success();
+            Image image =  imageService.findById(user.getAvatar());
+            log.info("image" + image);
+            return AjaxResponse.success(user);
         }else{
             return AjaxResponse.error();
         }
@@ -62,6 +67,22 @@ public class UserController {
         }else{
             userService.addUser(email,nickname,password);
             return AjaxResponse.success();
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/resetPassword")
+    public @ResponseBody
+    AjaxResponse resetPassword(@RequestBody JsonNode jsonNode) throws Exception {
+        //用户认证
+        String email = jsonNode.path("email").textValue();
+        String password = jsonNode.path("password").textValue();
+        boolean hasUser = userService.hasUser(email);
+        log.info("user:"+hasUser);
+        if(hasUser) {
+            userService.resetUserPassword(email,password);
+            return AjaxResponse.success();
+        }else{
+            return AjaxResponse.error("用户不存在");
         }
     }
 }

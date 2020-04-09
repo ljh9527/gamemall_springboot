@@ -19,13 +19,13 @@ public class User {
     @JsonProperty("id")
     private Integer id;
 
-    @Size(max = 20, message = "昵称长度不能超过20")
+    @Size(max = 40, message = "邮件长度不能超过40")
     @Column(name = "email", unique = true)
     @JsonProperty("email")
     private String email;
 
     @Column(name = "nickname", length = 50)
-    @Size(max = 20, message = "昵称长度不能超过20")
+    @Size(max = 50, message = "昵称长度不能超过50")
     @JsonProperty("nickname")
     private String nickname;
 

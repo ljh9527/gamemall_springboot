@@ -52,4 +52,5 @@ public class AjaxResponse {
         resultBean.setData("");
         return resultBean;
     }
+
 }
