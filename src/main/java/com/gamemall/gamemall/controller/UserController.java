@@ -1,6 +1,8 @@
 package com.gamemall.gamemall.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamemall.gamemall.entity.Image;
+import com.gamemall.gamemall.service.ImageService;
 import com.gamemall.gamemall.utils.AjaxResponse;
 import com.gamemall.gamemall.entity.User;
 import com.gamemall.gamemall.service.UserService;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService userService;
+    private ImageService imageService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -39,7 +42,9 @@ public class UserController {
         log.info("user:"+userService.getAccount(email, password));
         User user = userService.getAccount(email, password);
         if(user!=null) {
-            return AjaxResponse.success();
+            Image image =  imageService.findById(user.getAvatar());
+            log.info("image" + image);
+            return AjaxResponse.success(user);
         }else{
             return AjaxResponse.error();
         }
