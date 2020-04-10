@@ -22,9 +22,11 @@ public class UserService {
         return user;
     }
 
-    public User addUser(String email) {
+    public User addUser(String email, String nickname, String password) {
         User user = new User();
         user.setEmail(email);
+        user.setNickname(nickname);
+        user.setPassword(password);
         return UserRepository.saveAndFlush(user);
     }
 
