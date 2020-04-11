@@ -22,6 +22,11 @@ public class UserService {
         return user;
     }
 
+    public User getAccount(String email) {
+        User user = (User) UserRepository.findByEmail(email);
+        return user;
+    }
+
     public User addUser(String email, String nickname, String password) {
         User user = new User();
         user.setEmail(email);

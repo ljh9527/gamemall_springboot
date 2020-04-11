@@ -3,6 +3,7 @@ package com.gamemall.gamemall.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamemall.gamemall.entity.Image;
 import com.gamemall.gamemall.entity.UserImage;
+import com.gamemall.gamemall.service.EmailService;
 import com.gamemall.gamemall.service.ImageService;
 import com.gamemall.gamemall.utils.AjaxResponse;
 import com.gamemall.gamemall.entity.User;
@@ -23,11 +24,13 @@ public class UserController {
 
     private UserService userService;
     private ImageService imageService;
+    private EmailService emailService;
 
     @Autowired
-    public UserController(UserService userService,ImageService imageService) {
+    public UserController(UserService userService,ImageService imageService,EmailService emailService) {
         this.userService = userService;
         this.imageService = imageService;
+        this.emailService = emailService;
     }
 
     @ApiResponses({
@@ -73,19 +76,52 @@ public class UserController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/resetPassword")
+    @RequestMapping(method = RequestMethod.POST, path = "/isHasUser")
     public @ResponseBody
-    AjaxResponse resetPassword(@RequestBody JsonNode jsonNode) throws Exception {
+    AjaxResponse isHasUser(@RequestBody JsonNode jsonNode) throws Exception {
         //用户认证
         String email = jsonNode.path("email").textValue();
-        String password = jsonNode.path("password").textValue();
+
         boolean hasUser = userService.hasUser(email);
-        log.info("user:"+hasUser);
         if(hasUser) {
-            userService.resetUserPassword(email,password);
-            return AjaxResponse.success();
+            return AjaxResponse.error("用户已存在");
         }else{
-            return AjaxResponse.error("用户不存在");
+            return AjaxResponse.success();
         }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/resetPassword")
+        public @ResponseBody
+        AjaxResponse resetPassword(@RequestBody JsonNode jsonNode) throws Exception {
+            //用户认证
+            String email = jsonNode.path("email").textValue();
+            String password = jsonNode.path("password").textValue();
+            boolean hasUser = userService.hasUser(email);
+            log.info("user:"+hasUser);
+            if(hasUser) {
+                userService.resetUserPassword(email,password);
+                return AjaxResponse.success();
+            }else{
+                return AjaxResponse.error("用户不存在");
+            }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/verificationCode")
+    public @ResponseBody
+    AjaxResponse getCode(@RequestBody JsonNode jsonNode) throws Exception {
+        //用户认证
+        String email = jsonNode.path("email").textValue();
+            emailService.sendEmail(email);
+            return AjaxResponse.success();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/info")
+    public @ResponseBody
+    AjaxResponse getUserInfo(@RequestParam(required = false, defaultValue = "") String email) throws Exception {
+        //用户认证
+        User user = userService.getAccount(email);
+        Image image =  imageService.findById(user.getAvatar());
+        UserImage userImage = new UserImage(user.getId(),user.getEmail(),user.getNickname(),user.getIntroduction(),image.getUrl());
+        return AjaxResponse.success(userImage);
     }
 }
