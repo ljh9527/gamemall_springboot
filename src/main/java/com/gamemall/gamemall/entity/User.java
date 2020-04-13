@@ -45,6 +45,26 @@ public class User {
 
     private String introduction;
 
+    private Double playtime;
+
+    private Long lastTime;
+
+    public Double getPlaytime() {
+        return playtime;
+    }
+
+    public void setPlaytime(Double playtime) {
+        this.playtime = playtime;
+    }
+
+    public Long getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(Long lastTime) {
+        this.lastTime = lastTime;
+    }
+
     public Integer getId() {
         return id;
     }

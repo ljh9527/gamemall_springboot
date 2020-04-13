@@ -46,4 +46,12 @@ public class UserService {
         User userName = UserRepository.findByEmail(email);
         return userName == null ? false:true;
     }
+
+    public User updateUserInfo(String email, String nickname, String introduction) {
+        User user = UserRepository.findByEmail(email);
+        user.setNickname(nickname);
+        user.setIntroduction(introduction);
+        log.info("user:"+user);
+        return UserRepository.saveAndFlush(user);
+    }
 }
