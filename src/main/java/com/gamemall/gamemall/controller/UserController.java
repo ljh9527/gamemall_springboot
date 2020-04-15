@@ -43,12 +43,11 @@ public class UserController {
         String email = jsonNode.path("email").textValue();
         String password = jsonNode.path("password").textValue();
 
-        log.info("user:"+userService.getAccount(email, password));
         User user = userService.getAccount(email, password);
         if(user!=null) {
             Image image =  imageService.findById(user.getAvatar());
             UserImage userImage = new UserImage(user.getId(),user.getEmail(),user.getNickname(),user.getIntroduction(),image.getUrl());
-            log.info("image:" + userImage);
+
             return AjaxResponse.success(userImage);
         }else{
             return AjaxResponse.error();
@@ -89,6 +88,7 @@ public class UserController {
             return AjaxResponse.success();
     }
 
+    // 获取验证码
     @RequestMapping(method = RequestMethod.POST, path = "/verificationCode")
     public @ResponseBody
     AjaxResponse getCode(@RequestBody JsonNode jsonNode) throws Exception {
@@ -97,13 +97,25 @@ public class UserController {
         return AjaxResponse.success();
     }
 
+    // 校验验证码
+    @RequestMapping(method = RequestMethod.POST, path = "/checkCode")
+    public @ResponseBody
+    AjaxResponse checkCode(@RequestBody JsonNode jsonNode) throws Exception {
+        String email = jsonNode.path("email").textValue();
+        String code = jsonNode.path("code").textValue();
+        if(emailService.checkCode(email,code)){
+            return AjaxResponse.success();
+        } else {
+            return AjaxResponse.error();
+        }
+    }
+
     @RequestMapping(method = RequestMethod.GET, path = "/info")
     public @ResponseBody
     AjaxResponse getUserInfo(@RequestParam(required = false, defaultValue = "") String email) throws Exception {
         User user = userService.getAccount(email);
         Image image =  imageService.findById(user.getAvatar());
         UserImage userImage = new UserImage(user.getId(),user.getEmail(),user.getNickname(),user.getIntroduction(),user.getPlaytime(),user.getLastTime(),image.getUrl());
-        log.info("user"+userImage);
         return AjaxResponse.success(userImage);
     }
 

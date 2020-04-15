@@ -16,6 +16,6 @@ public interface GameRepository extends JpaRepository<Game, Integer>, JpaSpecifi
     @Query(value = "select new map(t1,t2) from  Game t1 left  join GameIndex t2 on t1.id=t2.gameId where t2.showType =:show_type")
     List<Map<String, Object>> findGameAndGameIndexByHQL(@Param("show_type") Long show_type);
 
-//    @Query(value = "select new map(t1,t2) from  Game t1 left  join GameImage t2 on t1.id=t2.gameId where t2.showType =:id")
-//    List<Map<String, Object>> findGameAndGameImageByHQL(@Param("show_type") Long id);
+    @Query(value = "select new map(t1,t2) from  Game t1 left  join GameImage t2 on t1.id=t2.gameId where t1.id =:id")
+    List<Map<String, Object>> findGameAndGameImageByHQL(@Param("id") Long id);
 }

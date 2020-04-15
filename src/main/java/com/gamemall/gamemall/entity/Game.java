@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -16,20 +17,48 @@ public class Game {
     @Column(name = "id")
     @JsonProperty("id")
     private Long id;
-
     private String gameName;
-
     private String gameIntroduction;
-
     private String gameAbout;
-
+    private String developers;
+    private String operator;
     private Integer gamePrice;
-
-    private Integer issuedstatu;
+    private Date issueddate;
     private String subtitle;
     private Long posterImage;
 
     public Game() {
+    }
+    public String getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(String developers) {
+        this.developers = developers;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public Date getIssueddate() {
+        return issueddate;
+    }
+
+    public void setIssueddate(Date issueddate) {
+        this.issueddate = issueddate;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 
     public Game(String gameName, String gameIntroduction, String gameAbout, Integer gamePrice, Long posterImage) {
@@ -40,12 +69,12 @@ public class Game {
         this.posterImage = posterImage;
     }
 
-    public Game(String gameName, String gameIntroduction, String gameAbout, Integer gamePrice, Integer issuedstatu, String subtitle, Long posterImage) {
+    public Game(String gameName, String gameIntroduction, String gameAbout, Integer gamePrice, Date issueddate, String subtitle, Long posterImage) {
         this.gameName = gameName;
         this.gameIntroduction = gameIntroduction;
         this.gameAbout = gameAbout;
         this.gamePrice = gamePrice;
-        this.issuedstatu = issuedstatu;
+        this.issueddate = issueddate;
         this.subtitle = subtitle;
         this.posterImage = posterImage;
     }

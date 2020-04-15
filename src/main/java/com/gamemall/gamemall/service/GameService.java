@@ -31,10 +31,10 @@ public class GameService {
         return game;
     }
 
-//    public List<Map<String, Object>> findGameInfo(Long id) {
-//
-//        List<Map<String, Object>> gameinfo = gameRepository.findGameAndGameImageByHQL(id);
-//        log.info("game"+gameinfo);
-//        return gameinfo;
-//    }
+    public List<Map<String, Object>> findGameInfo(Long id) {
+
+        List<Map<String, Object>> gameinfo = gameRepository.findGameAndGameImageByHQL(id);
+        log.info("game"+gameinfo);
+        return gameinfo;
+    }
 }
