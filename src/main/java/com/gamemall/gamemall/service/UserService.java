@@ -1,6 +1,8 @@
 package com.gamemall.gamemall.service;
 
+import com.gamemall.gamemall.entity.Image;
 import com.gamemall.gamemall.entity.User;
+import com.gamemall.gamemall.repositoy.ImageRepository;
 import com.gamemall.gamemall.repositoy.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ public class UserService {
     }
 
     public User getAccount(String email, String password) {
-        User user = (User) UserRepository.findByEmailAndAndPassword(email, password);
+        User user = (User) UserRepository.findByEmailAndPassword(email, password);
         return user;
     }
 
@@ -32,13 +34,13 @@ public class UserService {
         user.setEmail(email);
         user.setNickname(nickname);
         user.setPassword(password);
+        user.setAvatar("https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/95/959986934ff7a3782a0746a96d5f5df8524d9c2b_full.jpg");
         return UserRepository.saveAndFlush(user);
     }
 
     public User resetUserPassword(String email, String password) {
         User user = UserRepository.findByEmail(email);
         user.setPassword(password);
-        log.info("user:"+user);
         return UserRepository.saveAndFlush(user);
     }
 
@@ -47,11 +49,18 @@ public class UserService {
         return userName == null ? false:true;
     }
 
-    public User updateUserInfo(String email, String nickname, String introduction) {
+    public User updateUserInfo(String email, String nickname, String introduction, String avater) {
         User user = UserRepository.findByEmail(email);
+        user.setAvatar(avater);
         user.setNickname(nickname);
         user.setIntroduction(introduction);
-        log.info("user:"+user);
+//        log.info("user:"+user);
+        return UserRepository.saveAndFlush(user);
+    }
+    public User updateUserInfo(String email, Long lastTime) {
+        User user = UserRepository.findByEmail(email);
+//        log.info("user:"+user);
+        user.setLastTime(lastTime);
         return UserRepository.saveAndFlush(user);
     }
 }

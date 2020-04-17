@@ -1,14 +1,10 @@
 package com.gamemall.gamemall.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gamemall.gamemall.entity.Image;
-import com.gamemall.gamemall.entity.UserImage;
 import com.gamemall.gamemall.service.EmailService;
-import com.gamemall.gamemall.service.ImageService;
 import com.gamemall.gamemall.utils.AjaxResponse;
 import com.gamemall.gamemall.entity.User;
 import com.gamemall.gamemall.service.UserService;
-import com.gamemall.gamemall.utils.ResultMsg;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +17,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService userService;
-    private ImageService imageService;
     private EmailService emailService;
 
     @Autowired
-    public UserController(UserService userService,ImageService imageService,EmailService emailService) {
+    public UserController(UserService userService,EmailService emailService) {
         this.userService = userService;
-        this.imageService = imageService;
         this.emailService = emailService;
     }
 
@@ -45,14 +39,23 @@ public class UserController {
 
         User user = userService.getAccount(email, password);
         if(user!=null) {
-            Image image =  imageService.findById(user.getAvatar());
-            UserImage userImage = new UserImage(user.getId(),user.getEmail(),user.getNickname(),user.getIntroduction(),image.getUrl());
+//            Image image =  imageService.findById(user.getAvatar());
+//            UserImage userImage = new UserImage(user.getId(),user.getEmail(),user.getNickname(),user.getIntroduction(),image.getUrl());
 
-            return AjaxResponse.success(userImage);
+            return AjaxResponse.success(user);
         }else{
             return AjaxResponse.error();
         }
     }
+//
+//    @RequestMapping(method = RequestMethod.POST, path = "/update")
+//    public @ResponseBody
+//    AjaxResponse loginOut(@RequestBody JsonNode jsonNode) throws Exception {
+//        String email = jsonNode.path("email").textValue();
+//        String nickname = jsonNode.path("nickname").textValue();
+//        userService.updateUserInfo(email,nickname);
+//        return AjaxResponse.success();
+//    }
 
     @RequestMapping(method = RequestMethod.POST, path = "/register")
     public @ResponseBody
@@ -114,9 +117,9 @@ public class UserController {
     public @ResponseBody
     AjaxResponse getUserInfo(@RequestParam(required = false, defaultValue = "") String email) throws Exception {
         User user = userService.getAccount(email);
-        Image image =  imageService.findById(user.getAvatar());
-        UserImage userImage = new UserImage(user.getId(),user.getEmail(),user.getNickname(),user.getIntroduction(),user.getPlaytime(),user.getLastTime(),image.getUrl());
-        return AjaxResponse.success(userImage);
+//        Image image =  imageService.findById(user.getAvatar());
+//        UserImage userImage = new UserImage(user.getId(),user.getEmail(),user.getNickname(),user.getIntroduction(),user.getPlaytime(),user.getLastTime(),image.getUrl());
+        return AjaxResponse.success(user);
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/update")
@@ -125,7 +128,14 @@ public class UserController {
         String email = jsonNode.path("email").textValue();
         String nickname = jsonNode.path("nickname").textValue();
         String introduction = jsonNode.path("introduction").textValue();
-        userService.updateUserInfo(email,nickname,introduction);
+        String avater = jsonNode.path("avater").textValue();
+        String time = jsonNode.path("time").toString();
+        if(time == null ||"".equals(time)){
+            userService.updateUserInfo(email,nickname,introduction,avater);
+        }else{
+            Long lastTime = Long.parseLong(time);
+            userService.updateUserInfo(email,lastTime);
+        }
         return AjaxResponse.success();
     }
 }

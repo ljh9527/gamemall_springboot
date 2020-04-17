@@ -26,6 +26,11 @@ public class Game {
     private Date issueddate;
     private String subtitle;
     private Long posterImage;
+    private String recommend;
+    private String sellwell;
+    private String prepurchase;
+    private String masterpiece;
+    private String single;
 
     public Game() {
     }

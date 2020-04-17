@@ -18,4 +18,23 @@ public interface GameRepository extends JpaRepository<Game, Integer>, JpaSpecifi
 
     @Query(value = "select new map(t1,t2) from  Game t1 left  join GameImage t2 on t1.id=t2.gameId where t1.id =:id")
     List<Map<String, Object>> findGameAndGameImageByHQL(@Param("id") Long id);
+
+    @Query(value = "select new map(t1,t2) from  Game t1 left  join GameImage t2 on t1.id=t2.gameId where t1.recommend =:recommend")
+    List<Map<String, Object>> findGamesByRecommend(@Param("recommend") String recommend);
+
+    @Query(value = "select new map(t1,t2) from  Game t1 left  join GameImage t2 on t1.id=t2.gameId where t1.sellwell =:sellwell")
+    List<Map<String, Object>> findGamesBySellwell(@Param("sellwell") String sellwell);
+
+    @Query(value = "select new map(t1,t2) from  Game t1 left  join GameImage t2 on t1.id=t2.gameId where t1.prepurchase =:prepurchase")
+    List<Map<String, Object>> findGamesByPrepurchase(@Param("prepurchase") String prepurchase);
+
+    @Query(value = "select new map(t1,t2) from  Game t1 left  join GameImage t2 on t1.id=t2.gameId where t1.masterpiece =:masterpiece")
+    List<Map<String, Object>> findGamesByMasterpiece(@Param("masterpiece") String masterpiece);
+
+    @Query(value = "select new map(t1,t2) from  Game t1 left  join GameImage t2 on t1.id=t2.gameId where t1.single =:single")
+    List<Map<String, Object>> findGamesBySingle(@Param("single") String single);
+
+    @Query(value = "select new map(t1,t2) from  Game t1 left  join GameImage t2 on t1.id=t2.gameId where t1.gameName =:gameName")
+    List<Map<String, Object>> findGameByName(@Param("gameName") String gameName);
+
 }

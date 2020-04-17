@@ -36,7 +36,7 @@ public class User {
 
     @Column(name = "avatar", length = 2000)
     @JsonProperty("avatar")
-    private Long avatar;
+    private String avatar;
 
     @Column(name = "salt", length = 50)
     @Size(max = 50, message = "加密盐长度不能超过50")
@@ -97,11 +97,11 @@ public class User {
         this.password = password;
     }
 
-    public Long getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Long avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 

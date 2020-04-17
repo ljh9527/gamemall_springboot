@@ -25,6 +25,33 @@ public class GameService {
         return game;
     }
 
+    public List<Map<String, Object>> findGamesByRecommend(String type) {
+
+        List<Map<String, Object>> game = gameRepository.findGamesByRecommend(type);
+        return game;
+    }
+    public List<Map<String, Object>> findGamesBySellwell(String type) {
+        List<Map<String, Object>> game = gameRepository.findGamesBySellwell(type);
+        return game;
+    }
+    public List<Map<String, Object>> findGamesByPrepurchase(String type) {
+        List<Map<String, Object>> game = gameRepository.findGamesByPrepurchase(type);
+        return game;
+    }
+    public List<Map<String, Object>> findGamesByMasterpiece(String type) {
+        List<Map<String, Object>> game = gameRepository.findGamesByMasterpiece(type);
+        return game;
+    }
+    public List<Map<String, Object>> findGamesBySingle(String type) {
+        List<Map<String, Object>> game = gameRepository.findGamesBySingle(type);
+        return game;
+    }
+
+    public List<Map<String, Object>> findGameByName(String name) {
+        List<Map<String, Object>> game = gameRepository.findGameByName(name);
+        return game;
+    }
+
     public List<Map<String, Object>> findIndexGame(Long type) {
 
         List<Map<String, Object>> game = gameRepository.findGameAndGameIndexByHQL(type);

@@ -5,26 +5,22 @@ import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "game_image")
-public class GameImage {
+@Table(name = "user_game")
+public class UserGame {
+
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     @JsonProperty("id")
     private Long id;
 
-    private String gameId;
-    private String image1;
-    private String image2;
-    private String image3;
-    private String image4;
-    private String image5;
-    private String image6;
-    private String imageCover;
-    private String bannerImg;
-
+    private String email;
+    private Long gameid;
+    private Integer playtime;
+    private Date lastplay;
 }

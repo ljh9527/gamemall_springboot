@@ -18,4 +18,9 @@ public class ImageService {
         Image image = (Image) ImageRepository.findById(id);
         return image;
     }
+
+//    public Image findById(long id) {
+//        Image image = (Image) ImageRepository.findById(id);
+//        return image;
+//    }
 }
