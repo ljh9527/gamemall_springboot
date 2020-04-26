@@ -22,6 +22,7 @@ public class GameController {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/listall")
+
     public @ResponseBody
     AjaxResponse getGameList(@RequestBody JsonNode jsonNode) throws Exception {
 

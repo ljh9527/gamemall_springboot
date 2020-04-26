@@ -5,23 +5,19 @@ import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Data
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "comment")
-public class Comment {
+@Table(name = "gameorder")
+public class Order {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     @JsonProperty("id")
-    private Integer id;
+    private Long id;
+    private Long gameid;
     private String email;
-    private String content;
-    private Date commentdate;
-    private Integer gameid;
-    private Long recommendstatu;
-    private String appendcontent;
-    private Date appenddate;
+    private String out_trade_no;
+    private String total_amount;
 }

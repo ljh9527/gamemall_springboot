@@ -57,10 +57,12 @@ public class UserService {
 //        log.info("user:"+user);
         return UserRepository.saveAndFlush(user);
     }
-    public User updateUserInfo(String email, Long lastTime) {
+    public User updateUserInfo(String email, Long lastTime, String time) {
+        Double playtime = Double.parseDouble(time);
         User user = UserRepository.findByEmail(email);
 //        log.info("user:"+user);
         user.setLastTime(lastTime);
+        user.setPlaytime(user.getPlaytime()+playtime);
         return UserRepository.saveAndFlush(user);
     }
 }

@@ -10,18 +10,14 @@ import java.util.Date;
 @Entity
 @Data
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "comment")
-public class Comment {
+@Table(name = "cart")
+public class Cart {
+
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     @JsonProperty("id")
-    private Integer id;
+    private Long id;
     private String email;
-    private String content;
-    private Date commentdate;
-    private Integer gameid;
-    private Long recommendstatu;
-    private String appendcontent;
-    private Date appenddate;
+    private Long gameid;
 }

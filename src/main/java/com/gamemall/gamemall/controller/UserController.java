@@ -130,11 +130,12 @@ public class UserController {
         String introduction = jsonNode.path("introduction").textValue();
         String avater = jsonNode.path("avater").textValue();
         String time = jsonNode.path("time").toString();
+        String playtime = jsonNode.path("playtime").textValue();
         if(time == null ||"".equals(time)){
             userService.updateUserInfo(email,nickname,introduction,avater);
         }else{
             Long lastTime = Long.parseLong(time);
-            userService.updateUserInfo(email,lastTime);
+            userService.updateUserInfo(email,lastTime,playtime);
         }
         return AjaxResponse.success();
     }
