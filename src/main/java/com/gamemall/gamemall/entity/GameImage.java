@@ -17,7 +17,7 @@ public class GameImage {
     @JsonProperty("id")
     private Long id;
 
-    private String gameId;
+    private Long gameId;
     private String image1;
     private String image2;
     private String image3;

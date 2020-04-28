@@ -37,4 +37,6 @@ public interface GameRepository extends JpaRepository<Game, Integer>, JpaSpecifi
     @Query(value = "select new map(t1,t2) from  Game t1 left  join GameImage t2 on t1.id=t2.gameId where t1.gameName =:gameName")
     List<Map<String, Object>> findGameByName(@Param("gameName") String gameName);
 
+    Game findById(Long id);
+
 }

@@ -49,6 +49,8 @@ public class User {
 
     private Long lastTime;
 
+    private Integer isadmin;
+
     public Double getPlaytime() {
         return playtime;
     }
