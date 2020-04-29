@@ -67,4 +67,19 @@ public class UserGameController {
         }
     }
 
+    @RequestMapping(method = RequestMethod.POST, path = "/updateStatus")
+    public @ResponseBody
+    AjaxResponse updateStatus(@RequestBody JsonNode jsonNode) throws Exception {
+        String email = jsonNode.path("email").textValue();
+        String gameid = jsonNode.path("gameid").toString();
+        String status = jsonNode.path("status").textValue();
+        UserGame userGame = userGameService.updateStatus(email,Long.parseLong(gameid),Long.parseLong(status));
+        log.info("gameid"+userGame);
+        if(userGame == null){
+            return AjaxResponse.error();
+        }else{
+            return AjaxResponse.success();
+        }
+    }
+
 }

@@ -46,4 +46,10 @@ public class UserGameService {
         return UserGameRepository.saveAndFlush(userGame);
     }
 
+    public UserGame updateStatus(String email, Long gameid, Long status) {
+        UserGame userGame = findUserGameByEmailAndGameid(email,gameid);
+        userGame.setStatus(status);
+        log.info("userGame"+userGame);
+        return UserGameRepository.saveAndFlush(userGame);
+    }
 }
