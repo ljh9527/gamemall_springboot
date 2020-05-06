@@ -3,6 +3,7 @@ package com.gamemall.gamemall.entity;
 public class UserImage {
     private Integer id;
     private String email;
+    private String password;
     private String nickname;
     private String avatar;
     private String introduction;
@@ -11,9 +12,10 @@ public class UserImage {
     public UserImage() {
     }
 
-    public UserImage(Integer id, String email, String nickname, String avatar, String introduction) {
+    public UserImage(Integer id, String email, String password, String nickname, String introduction, String avatar) {
         this.id = id;
         this.email = email;
+        this.password = password;
         this.nickname = nickname;
         this.avatar = avatar;
         this.introduction = introduction;

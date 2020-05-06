@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService userService;
-    @Autowired
     private ImageService imageService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService,ImageService imageService) {
         this.userService = userService;
+        this.imageService = imageService;
     }
 
     @ApiResponses({
@@ -46,7 +46,7 @@ public class UserController {
         User user = userService.getAccount(email, password);
         if(user!=null) {
             Image image =  imageService.findById(user.getAvatar());
-            UserImage userImage = new UserImage(user.getId(),user.getEmail(),user.getNickname(),user.getIntroduction(),image.getUrl());
+            UserImage userImage = new UserImage(user.getId(),user.getEmail(),user.getPassword(),user.getNickname(),user.getIntroduction(),image.getUrl());
             log.info("image" + image);
             return AjaxResponse.success(userImage);
         }else{
