@@ -36,7 +36,7 @@ public class User {
 
     @Column(name = "avatar", length = 2000)
     @JsonProperty("avatar")
-    private Long avatar;
+    private String avatar;
 
     @Column(name = "salt", length = 50)
     @Size(max = 50, message = "加密盐长度不能超过50")
@@ -50,6 +50,28 @@ public class User {
     private int buyGames;
 
     private String introduction;
+
+    private Double playtime;
+
+    private Long lastTime;
+
+    private Integer isadmin;
+
+    public Double getPlaytime() {
+        return playtime;
+    }
+
+    public void setPlaytime(Double playtime) {
+        this.playtime = playtime;
+    }
+
+    public Long getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(Long lastTime) {
+        this.lastTime = lastTime;
+    }
 
     public Integer getId() {
         return id;
@@ -83,11 +105,11 @@ public class User {
         this.password = password;
     }
 
-    public Long getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Long avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 

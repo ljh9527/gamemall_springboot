@@ -51,11 +51,18 @@ spring:
     host: smtp.qq.com
     username: 670684985@qq.com  # 邮箱地址
     password: dxiddjrwsovbbefc # 授权码
+    smtp:
+      auth: true
     properties:
       mail:
         smtp:
+          port: 25
           ssl:
             enable: true
+          socketFactory:
+            port: 25
+            fallback: false
+            class: javax.net.ssl.SSLSocketFactory
 
 ---
 spring:
