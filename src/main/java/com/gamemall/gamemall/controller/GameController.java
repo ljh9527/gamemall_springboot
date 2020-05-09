@@ -66,12 +66,12 @@ public class GameController {
         return AjaxResponse.success(gameService.findGameByName(name));
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/index")
-    public @ResponseBody
-    AjaxResponse getGameList(@RequestParam(required = true, defaultValue = "") Long type) throws Exception {
-
-        return AjaxResponse.success(gameService.findIndexGame(type));
-    }
+//    @RequestMapping(method = RequestMethod.GET, path = "/index")
+//    public @ResponseBody
+//    AjaxResponse getGameList(@RequestParam(required = true, defaultValue = "") Long type) throws Exception {
+//
+//        return AjaxResponse.success(gameService.findIndexGame(type));
+//    }
 
     @RequestMapping(method = RequestMethod.GET, path = "/info")
     public @ResponseBody
@@ -105,5 +105,12 @@ public class GameController {
         GameImage gameimage =  gameImageService.addGameImage(game.getId(),image_cover,banner_img,image1,image2,image3,image4,image5,image6);
         gameService.updataGameImage(game.getId(),gameimage.getId());
         return AjaxResponse.success();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/index/type")
+    public @ResponseBody
+    AjaxResponse getGameIndexList(@RequestParam(required = true, defaultValue = "") Long type) throws Exception {
+
+        return AjaxResponse.success(gameService.findGameList(type));
     }
 }

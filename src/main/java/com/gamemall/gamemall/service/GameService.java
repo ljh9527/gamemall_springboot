@@ -2,6 +2,8 @@ package com.gamemall.gamemall.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.gamemall.gamemall.entity.Game;
+import com.gamemall.gamemall.entity.GameIndex;
+import com.gamemall.gamemall.repositoy.GameIndexRepository;
 import com.gamemall.gamemall.repositoy.GameRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,12 @@ import java.util.Map;
 @Service
 public class GameService {
     private GameRepository gameRepository;
+    private GameIndexRepository gameIndexRepository;
 
     @Autowired
-    public GameService(GameRepository gameRepository) {
+    public GameService(GameRepository gameRepository,GameIndexRepository gameIndexRepository) {
         this.gameRepository = gameRepository;
+        this.gameIndexRepository = gameIndexRepository;
     }
 
     public List<Game> findAll() {
@@ -54,11 +58,11 @@ public class GameService {
         return game;
     }
 
-    public List<Map<String, Object>> findIndexGame(Long type) {
-
-        List<Map<String, Object>> game = gameRepository.findGameAndGameIndexByHQL(type);
-        return game;
-    }
+//    public List<Map<String, Object>> findIndexGame(Long type) {
+//
+//        List<Map<String, Object>> game = gameRepository.findGameAndGameIndexByHQL(type);
+//        return game;
+//    }
 
     public List<Map<String, Object>> findGameInfo(Long id) {
 
@@ -102,5 +106,16 @@ public class GameService {
         Game game = gameRepository.findById(gameid);
         game.setPosterImage(imageid);
         return gameRepository.saveAndFlush(game);
+    }
+
+    public List<Map<String, Object>> findGameList(Long type) {
+        List<Map<String, Object>> gameList = gameIndexRepository.findByShowType(type);
+        return gameList;
+    }
+
+    public List<GameIndex> updateGameIndex(Long type,Long imageid){
+        List<GameIndex> gameList = gameIndexRepository.findGameIndexesByShowType(type);
+//        game.setPosterImage(imageid);
+        return gameIndexRepository.saveAll(gameList);
     }
 }

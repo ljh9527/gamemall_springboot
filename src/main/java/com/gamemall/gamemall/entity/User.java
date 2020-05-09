@@ -43,12 +43,6 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String salt;
 
-    private double playtime;
-
-    private int commentNum;
-
-    private int buyGames;
-
     private String introduction;
 
     private Double playtime;
