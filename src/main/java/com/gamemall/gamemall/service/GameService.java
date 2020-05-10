@@ -113,9 +113,12 @@ public class GameService {
         return gameList;
     }
 
-    public List<GameIndex> updateGameIndex(Long type,Long imageid){
+    public List<GameIndex> updateGameIndex(Long type,JSONArray newdate){
         List<GameIndex> gameList = gameIndexRepository.findGameIndexesByShowType(type);
-//        game.setPosterImage(imageid);
+        for(int i = 0; i < gameList.size(); i++){
+            gameList.get(i).setGameId(Long.parseLong(newdate.get(i).toString()));
+        }
+        log.info("gameList"+gameList);
         return gameIndexRepository.saveAll(gameList);
     }
 }

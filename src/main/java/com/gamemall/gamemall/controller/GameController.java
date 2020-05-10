@@ -113,4 +113,12 @@ public class GameController {
 
         return AjaxResponse.success(gameService.findGameList(type));
     }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/index/update")
+    public @ResponseBody
+    AjaxResponse updateGameIndex(@RequestBody JsonNode jsonNode) throws Exception {
+        Long type = jsonNode.path("type").longValue();
+        JSONArray indexData = JSON.parseArray(jsonNode.path("value").toString());
+        return AjaxResponse.success(gameService.updateGameIndex(type,indexData));
+    }
 }
