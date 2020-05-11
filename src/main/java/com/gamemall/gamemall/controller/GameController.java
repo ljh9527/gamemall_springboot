@@ -123,13 +123,13 @@ public class GameController {
         return AjaxResponse.success(gameService.updateGameIndex(type,indexData));
     }
 
-//    @RequestMapping(method = RequestMethod.POST, path = "/search")
-//    public @ResponseBody
-//    AjaxResponse getGameByNameOrType(@RequestBody JsonNode jsonNode) throws Exception {
-//        String gameName = jsonNode.path("gameName").textValue();
-//        Long type = jsonNode.path("type").longValue();
-//        return AjaxResponse.success(gameService.searchGame(type,gameName));
-//    }
+    @RequestMapping(method = RequestMethod.POST, path = "/search")
+    public @ResponseBody
+    AjaxResponse getGameByNameOrType(@RequestBody JsonNode jsonNode) throws Exception {
+        String gameName = jsonNode.path("game_name").textValue();
+        String type = jsonNode.path("type").textValue();
+        return AjaxResponse.success(gameService.searchGame(type,gameName));
+    }
 
     @RequestMapping(method = RequestMethod.POST, path = "/delete")
     public @ResponseBody

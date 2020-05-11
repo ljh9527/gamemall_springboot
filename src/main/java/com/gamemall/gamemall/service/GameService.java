@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,9 @@ import java.util.Map;
 public class GameService {
     private GameRepository gameRepository;
     private GameIndexRepository gameIndexRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Autowired
     public GameService(GameRepository gameRepository,GameIndexRepository gameIndexRepository) {
@@ -130,10 +135,23 @@ public class GameService {
         return gameIndexRepository.saveAll(gameList);
     }
 
-//    public List<Map<String, Object>> searchGame(Long type,String gameName){
-//        List<Map<String, Object>> gameList = gameIndexRepository.findGameByShowTypeAndGameName(type,gameName);
-//        return gameList;
-//    }
+    public List<Map<String, Object>> searchGame(String type,String game_name){
+        String sql = "select * from game where ";
+        log.info("game_name"+game_name);
+        if(game_name != null){
+            sql = sql + "game_name LIKE '%" + game_name + "%'";
+        }
+        if(type != null && game_name != null){
+            sql = sql + " AND " + type + " = 1";
+        }else if(type != null && game_name == null){
+            sql = sql + type + " = 1";
+        }else if(type == null && game_name == null){
+            sql = "select * from game";
+        }
+        Query query = entityManager.createNativeQuery(sql, Game.class);
+        List<Map<String, Object>> list = query.getResultList();
+        return list;
+    }
 
     public Boolean deleteGame(Long id){
         if(gameIndexRepository.findGameIndexByGameId(id) != null){
