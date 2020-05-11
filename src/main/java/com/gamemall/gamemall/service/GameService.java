@@ -70,8 +70,17 @@ public class GameService {
         return gameinfo;
     }
 
-    public Game addGame(String game_name, String subtitle, String developers, String operator, String game_price, String issueddate, String game_introduction, String game_about, JSONArray status) {
-        Game game = new Game();
+    public Map<String, Object> getGameInfo(Long id) {
+
+        Map<String, Object> gameinfo = gameRepository.findGameById(id);
+        return gameinfo;
+    }
+
+    public Game addGame(String id, String game_name, String subtitle, String developers, String operator, String game_price, String issueddate, String game_introduction, String game_about, JSONArray status) {
+        Game game = gameRepository.findById(Long.parseLong(id));
+        if(game == null){
+            game = new Game();
+        }
 
         long lt = new Long(issueddate);
         Date date = new Date(lt);
@@ -118,7 +127,21 @@ public class GameService {
         for(int i = 0; i < gameList.size(); i++){
             gameList.get(i).setGameId(Long.parseLong(newdate.get(i).toString()));
         }
-        log.info("gameList"+gameList);
         return gameIndexRepository.saveAll(gameList);
     }
+
+//    public List<Map<String, Object>> searchGame(Long type,String gameName){
+//        List<Map<String, Object>> gameList = gameIndexRepository.findGameByShowTypeAndGameName(type,gameName);
+//        return gameList;
+//    }
+
+    public Boolean deleteGame(Long id){
+        if(gameIndexRepository.findGameIndexByGameId(id) != null){
+            return false;
+        } else{
+            gameRepository.delete(gameRepository.findById(id));
+            return true;
+        }
+    }
+
 }

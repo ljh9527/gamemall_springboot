@@ -39,4 +39,13 @@ public interface GameRepository extends JpaRepository<Game, Integer>, JpaSpecifi
 
     Game findById(Long id);
 
+    @Query(nativeQuery = true, value = " SELECT game.id,game.game_name,game.subtitle,game.game_introduction,game.game_about,game.issueddate,game.game_price,game.developers,game.operator,game.recommend,game.sellwell,game.prepurchase,game.masterpiece,game.single,game_image.banner_img,game_image.image1," +
+            "game_image.image2,game_image.image3,game_image.image4,game_image.image5,game_image.image6,game_image.image_cover FROM game_image" +
+            " RIGHT JOIN game ON game.id = game_image.game_id WHERE game.id = :id")
+    Map<String, Object> findGameById(Long id);
+//
+//    @Query(nativeQuery = true, value = " SELECT game.game_name,game.subtitle,game.issueddate,game.game_price,gameindex.show_type,gameindex.game_id,gameindex.id,game_image.banner_img  FROM game_image RIGHT JOIN game ON game.id = game_image.game_id" +
+//            " RIGHT JOIN gameindex ON gameindex.game_id = game.id WHERE gameindex.show_type = :showType")
+//    List<Map<String, Object>> findGamesBysho(Long showType);
+
 }

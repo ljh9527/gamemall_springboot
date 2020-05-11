@@ -83,6 +83,7 @@ public class GameController {
     @RequestMapping(method = RequestMethod.POST, path = "/add")
     public @ResponseBody
     AjaxResponse addGame(@RequestBody JsonNode jsonNode) throws Exception {
+        String id = jsonNode.path("id").textValue();
         String game_name = jsonNode.path("game_name").textValue();
         String subtitle = jsonNode.path("subtitle").textValue();
         String developers = jsonNode.path("developers").textValue();
@@ -101,7 +102,7 @@ public class GameController {
         String image5 = jsonNode.path("image5").textValue();
         String image6 = jsonNode.path("image6").textValue();
 
-        Game game = gameService.addGame(game_name,subtitle,developers,operator,game_price,issueddate,game_introduction,game_about,status);
+        Game game = gameService.addGame(id,game_name,subtitle,developers,operator,game_price,issueddate,game_introduction,game_about,status);
         GameImage gameimage =  gameImageService.addGameImage(game.getId(),image_cover,banner_img,image1,image2,image3,image4,image5,image6);
         gameService.updataGameImage(game.getId(),gameimage.getId());
         return AjaxResponse.success();
@@ -120,5 +121,31 @@ public class GameController {
         Long type = jsonNode.path("type").longValue();
         JSONArray indexData = JSON.parseArray(jsonNode.path("value").toString());
         return AjaxResponse.success(gameService.updateGameIndex(type,indexData));
+    }
+
+//    @RequestMapping(method = RequestMethod.POST, path = "/search")
+//    public @ResponseBody
+//    AjaxResponse getGameByNameOrType(@RequestBody JsonNode jsonNode) throws Exception {
+//        String gameName = jsonNode.path("gameName").textValue();
+//        Long type = jsonNode.path("type").longValue();
+//        return AjaxResponse.success(gameService.searchGame(type,gameName));
+//    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/delete")
+    public @ResponseBody
+    AjaxResponse deleteGame(@RequestBody JsonNode jsonNode) throws Exception {
+        String gameId = jsonNode.path("gameId").toString();
+        if(gameService.deleteGame(Long.parseLong(gameId)) == true){
+            return AjaxResponse.success("下架成功");
+        }else{
+            return AjaxResponse.error("下架失败，清先将游戏移除活动页");
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/allinfo")
+    public @ResponseBody
+    AjaxResponse getGameAllInfo(@RequestParam(required = true, defaultValue = "") Long id) throws Exception {
+
+        return AjaxResponse.success(gameService.getGameInfo(id));
     }
 }

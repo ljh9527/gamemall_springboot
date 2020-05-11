@@ -15,4 +15,6 @@ public interface GameIndexRepository extends JpaRepository<GameIndex, Long>, Jpa
     List<Map<String, Object>> findByShowType(Long showType);
 
     List<GameIndex> findGameIndexesByShowType(Long showType);
+
+    GameIndex findGameIndexByGameId(Long id);
 }

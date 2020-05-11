@@ -1,5 +1,6 @@
 package com.gamemall.gamemall.service;
 
+import com.gamemall.gamemall.entity.Game;
 import com.gamemall.gamemall.entity.GameImage;
 import com.gamemall.gamemall.repositoy.GameImageRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,10 @@ public class GameImageService {
     }
 
     public GameImage addGameImage(Long gameId, String image_cover, String banner_img, String image1, String image2, String image3, String image4, String image5, String image6) {
-        GameImage gameImage = new GameImage();
+        GameImage gameImage = gameImageRepository.findGameImageByGameId(gameId);
+        if(gameImage == null){
+            gameImage = new GameImage();
+        }
         gameImage.setGameId(gameId);
         gameImage.setImageCover(image_cover);
         gameImage.setBannerImg(banner_img);
