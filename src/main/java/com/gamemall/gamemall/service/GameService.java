@@ -136,16 +136,15 @@ public class GameService {
     }
 
     public List<Map<String, Object>> searchGame(String type,String game_name){
-        String sql = "select * from game where ";
+        String sql = "select * from game where 1 = 1";
         log.info("game_name"+game_name);
         if(game_name != null){
-            sql = sql + "game_name LIKE '%" + game_name + "%'";
+            sql = sql + " AND " + "game_name LIKE '%" + game_name + "%'";
         }
-        if(type != null && game_name != null){
+        if(type != null){
             sql = sql + " AND " + type + " = 1";
-        }else if(type != null && game_name == null){
-            sql = sql + type + " = 1";
-        }else if(type == null && game_name == null){
+        }
+        if(type == null && game_name == null){
             sql = "select * from game";
         }
         Query query = entityManager.createNativeQuery(sql, Game.class);

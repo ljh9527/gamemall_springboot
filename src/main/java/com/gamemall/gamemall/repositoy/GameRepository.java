@@ -34,7 +34,7 @@ public interface GameRepository extends JpaRepository<Game, Integer>, JpaSpecifi
     @Query(value = "select new map(t1,t2) from  Game t1 left  join GameImage t2 on t1.id=t2.gameId where t1.single =:single")
     List<Map<String, Object>> findGamesBySingle(@Param("single") String single);
 
-    @Query(value = "select new map(t1,t2) from  Game t1 left  join GameImage t2 on t1.id=t2.gameId where t1.gameName =:gameName")
+    @Query(value = "select new map(t1,t2) from  Game t1 left  join GameImage t2 on t1.id=t2.gameId where t1.gameName LIKE CONCAT('%',:gameName,'%')")
     List<Map<String, Object>> findGameByName(@Param("gameName") String gameName);
 
     Game findById(Long id);
@@ -48,9 +48,5 @@ public interface GameRepository extends JpaRepository<Game, Integer>, JpaSpecifi
 //            "FROM game" +
 //            "WHERE game.recommend = :recommend AND game.game_name = :game_name")
 //    List<Map<String, Object>> findGamesByRecommendAndGameName(@Param("recommend") String recommend);
-//
-//    @Query(nativeQuery = true, value = " SELECT game.id,game.game_name,game.issueddate,game.game_price,game.developers,game.operator" +
-//            "FROM game" +
-//            "WHERE game.sellwell = :sellwell AND game.game_name = :game_name")
-//    List<Map<String, Object>> findGamesBySellwellAndGameName(@Param("sellwell") String sellwell);
+
 }
