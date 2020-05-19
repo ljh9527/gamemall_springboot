@@ -38,10 +38,10 @@ public class User {
     @JsonProperty("avatar")
     private String avatar;
 
-    @Column(name = "salt", length = 50)
-    @Size(max = 50, message = "加密盐长度不能超过50")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String salt;
+//    @Column(name = "salt", length = 50)
+//    @Size(max = 50, message = "加密盐长度不能超过50")
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    private String salt;
 
     private String introduction;
 

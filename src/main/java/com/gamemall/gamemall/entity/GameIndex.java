@@ -20,5 +20,5 @@ public class GameIndex {
     private Long gameId;
 
     private Long showType;
-    private String bannerImg;
+//    private String bannerImg;
 }
