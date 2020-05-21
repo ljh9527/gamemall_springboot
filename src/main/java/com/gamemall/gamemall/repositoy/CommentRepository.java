@@ -13,7 +13,7 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
 //    @Query(value = "select new map(t1,t2) from  Comment t1 left  join User t2 on t2.email=t1.email where t1.gameid =:id")
 //    List<Map<String, Object>> findCommentsByGameid(Integer id);
 
-    @Query(nativeQuery = true, value = " SELECT comment.id,comment.content,comment.commentdate,comment.gameid,comment.recommendstatu,user.nickname,user.avatar FROM user" +
+    @Query(nativeQuery = true, value = " SELECT comment.id,comment.content,comment.commentdate,comment.gameid,comment.recommendstatu,comment.appendcontent,comment.appenddate,user.nickname,user.avatar FROM user" +
             " RIGHT JOIN comment ON comment.email = user.email WHERE comment.gameid = :game_id")
     List<Map<String, Object>> findImagesByGameId(@Param(value = "game_id") Integer gameId);
 

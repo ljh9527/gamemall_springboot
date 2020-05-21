@@ -31,6 +31,7 @@ public class Game {
     private String prepurchase;
     private String masterpiece;
     private String single;
+    private String download;
 
     public Game() {
     }
