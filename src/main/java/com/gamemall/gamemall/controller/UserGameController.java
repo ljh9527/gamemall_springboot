@@ -42,10 +42,11 @@ public class UserGameController {
         String email = jsonNode.path("email").textValue();
         String gameid = jsonNode.path("gameid").textValue();
         String status = jsonNode.path("status").textValue();
+        String address = jsonNode.path("address").textValue();
         UserGame userGame = userGameService.findUserGameByEmailAndGameid(email,Long.parseLong(gameid));
         log.info("gameid"+userGame);
         if(userGame == null){
-            userGameService.addUserGame(email,Long.parseLong(gameid),Long.parseLong(status));
+            userGameService.addUserGame(email,Long.parseLong(gameid),Long.parseLong(status),address);
             return AjaxResponse.success();
         }else{
             return AjaxResponse.error();

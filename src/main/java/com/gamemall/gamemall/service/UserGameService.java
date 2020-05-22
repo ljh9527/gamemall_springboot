@@ -30,11 +30,12 @@ public class UserGameService {
         return userGame;
     }
 
-    public UserGame addUserGame(String email,Long gameid,Long status) {
+    public UserGame addUserGame(String email,Long gameid,Long status,String address) {
         UserGame userGame = new UserGame();
         userGame.setEmail(email);
         userGame.setGameid(gameid);
         userGame.setStatus(status);
+        userGame.setAddress(address);
         log.info("userGame"+userGame);
         return UserGameRepository.saveAndFlush(userGame);
     }

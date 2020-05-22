@@ -24,4 +24,5 @@ public class UserGame {
     private Integer playtime;
     private Date lastplay;
     private Long status;
+    private String address;
 }
