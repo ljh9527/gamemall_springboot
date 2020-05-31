@@ -81,7 +81,8 @@ public class GameService {
         return gameinfo;
     }
 
-    public Game addGame(String id, String game_name, String subtitle, String developers, String operator, String game_price, String issueddate, String game_introduction, String game_about, JSONArray status) {
+    public Game addGame(String id, String game_name, String subtitle, String developers, String operator, String game_price, String issueddate, String game_introduction, String game_about, JSONArray status, String download) {
+        id = id == null ? "-1" : id;
         Game game = gameRepository.findById(Long.parseLong(id));
         if(game == null){
             game = new Game();
@@ -113,6 +114,8 @@ public class GameService {
         game.setIssueddate(date);
         game.setGameIntroduction(game_introduction);
         game.setGameAbout(game_about);
+        game.setDownload(download);
+        log.info("game" + game);
         return gameRepository.saveAndFlush(game);
     }
 

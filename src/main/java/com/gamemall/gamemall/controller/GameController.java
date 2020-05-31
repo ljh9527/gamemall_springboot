@@ -101,8 +101,10 @@ public class GameController {
         String image4 = jsonNode.path("image4").textValue();
         String image5 = jsonNode.path("image5").textValue();
         String image6 = jsonNode.path("image6").textValue();
+        String download = jsonNode.path("download").textValue();
 
-        Game game = gameService.addGame(id,game_name,subtitle,developers,operator,game_price,issueddate,game_introduction,game_about,status);
+        Game game = gameService.addGame(id,game_name,subtitle,developers,operator,game_price,issueddate,game_introduction,game_about,status,download);
+        log.info("game" + game);
         GameImage gameimage =  gameImageService.addGameImage(game.getId(),image_cover,banner_img,image1,image2,image3,image4,image5,image6);
         gameService.updataGameImage(game.getId(),gameimage.getId());
         return AjaxResponse.success();

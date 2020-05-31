@@ -53,14 +53,11 @@ public class EmailService {
         coder.setEmail(email);
         coder.setCode(code);
         CodeRepository.saveAndFlush(coder);
-        log.info("coder"+coder);
         return "您好，您的验证码是 "+code+" ,请及时输入，以防过期！";
     }
 
     public Boolean checkCode(String email,String code) {
         Code coder =  CodeRepository.findByEmail(email);
-        log.info("code"+code);
-        log.info("coder"+coder.getCode());
         if(coder.getCode().equals(code)){
             return true;
         } else{
